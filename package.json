@@ -1,0 +1,23 @@
+{
+  "name": "git-chat",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start": "node index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/staab/git-chat.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/staab/git-chat/issues"
+  },
+  "homepage": "https://github.com/staab/git-chat#readme",
+  "dependencies": {
+    "node-uuid": "^1.4.7",
+    "rimraf": "^2.5.4"
+  }
+}
