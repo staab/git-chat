@@ -64,9 +64,9 @@ function cleanup() {
   clearInterval(pullInterval)
 
   push(username + " has left", function() {
-    rimraf(dir)
-
-    process.exit()
+    setTimeout(function () {
+      rimraf(dir)
+    }, 1000)
   })
 }
 
