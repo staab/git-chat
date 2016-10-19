@@ -28,13 +28,17 @@ exec('git clone ' + repo + ' ' + dir, function(error, stdout, stderr) {
 
   console.log(stdout)
   console.log(stderr)
+
+  console.log("Welcome to git-chat, the chat client built on git!")
+  console.log("Type something in to join the conversation!")
+  console.log("")
+
+  push("Someone has joined the conversation")
+
   prompt()
 
   rl.on('line', function(line) {
     prompt()
-
-    fs.writeFileSync(uuidFile, uuid())
-
     push(line)
   })
 })
@@ -61,13 +65,28 @@ function execInDir(cmd, fn, quiet) {
     }
 
     if (fn) {
-      fn(stdout)
+      fn(stdout, error)
     }
   })
 }
 
 function push(line) {
-  execInDir('git commit -am "' + line + '" && git push', getCommit)
+  fs.writeFileSync(uuidFile, uuid())
+
+  function doPush() {
+    execInDir('git commit -am "' + line + '"', function() {
+      getCommit()
+
+      execInDir('git pull && git push', function(stdout, error) {
+        // Keep trying til we get it
+        if (error) {
+          doPush()
+        }
+      }, true)
+    })
+  }
+
+  doPush()
 }
 
 function pull() {
@@ -98,7 +117,7 @@ function pull() {
 }
 
 function getCommit() {
-  exec('git log | head -n1', function(error, stdout) {
+  execInDir('git log | head -n1', function(stdout) {
     commit = stdout
   })
 }
