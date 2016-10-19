@@ -53,7 +53,12 @@ exec('git clone ' + repo + ' ' + dir, function(error, stdout, stderr) {
 var pullInterval = setInterval(pull, 1000)
 
 rl.on('close', cleanup)
-process.on('SIGINT', cleanup)
+process.on('exit', function() {
+  rl.close()
+})
+process.on('SIGINT', function() {
+  rl.close()
+})
 
 function cleanup() {
   process.stdout.clearLine()
@@ -66,6 +71,7 @@ function cleanup() {
   push(username + " has left", function() {
     setTimeout(function () {
       rimraf(dir)
+      process.exit()
     }, 1000)
   })
 }
