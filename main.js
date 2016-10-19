@@ -5,15 +5,22 @@ var rimraf = require('rimraf').sync
 var path = require('path')
 var uuid = require('node-uuid').v4
 
+if (process.argv.length > 2) {
+  var username = process.argv[2]
+} else {
+  console.log('Please provide your username as the first argument.')
+  process.exit()
+}
 
 var repo = 'https://git-chat-client:git-chat1@github.com/git-chat-client/git-chat-messages.git'
-var dir = process.argv.length > 2 ? process.argv[2] : path.join(process.env.HOME, '.git-chat')
+var dir = process.argv.length > 3 ? process.argv[3] : path.join(process.env.HOME, '.git-chat')
 var uuidFile = path.join(dir, 'uuid.txt')
 var rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout,
   terminal: false
 })
+var cleaningUp = false
 
 var commit = null
 
@@ -33,26 +40,35 @@ exec('git clone ' + repo + ' ' + dir, function(error, stdout, stderr) {
   console.log("Type something in to join the conversation!")
   console.log("")
 
-  push("Someone has joined the conversation")
+  push(username + " has joined")
 
   prompt()
 
   rl.on('line', function(line) {
     prompt()
-    push(line)
+    push(username + ": " + line)
   })
 })
 
-setInterval(pull, 1000)
+var pullInterval = setInterval(pull, 1000)
 
-rl.on('close', function() {
-  rimraf(dir)
-})
+rl.on('close', cleanup)
+process.on('SIGINT', cleanup)
 
-process.on('SIGINT', function() {
-  rimraf(dir)
-  process.exit()
-})
+function cleanup() {
+  process.stdout.clearLine()
+  process.stdout.cursorTo(0)
+  console.log("Cleaning up...")
+  cleaningUp = true
+
+  clearInterval(pullInterval)
+
+  push(username + " has left", function() {
+    rimraf(dir)
+
+    process.exit()
+  })
+}
 
 function prompt() {
   process.stdout.write(">> ")
@@ -70,7 +86,7 @@ function execInDir(cmd, fn, quiet) {
   })
 }
 
-function push(line) {
+function push(line, fn) {
   fs.writeFileSync(uuidFile, uuid())
 
   function doPush() {
@@ -81,9 +97,11 @@ function push(line) {
         // Keep trying til we get it
         if (error) {
           doPush()
+        } else if(fn) {
+          fn()
         }
       }, true)
-    })
+    }, true)
   }
 
   doPush()
