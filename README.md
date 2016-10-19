@@ -11,13 +11,12 @@ This is a riff on that - what if instead of using your chat program to browse co
 Give it a try! It's pretty simple. Just type this into your terminal:
 
 ```
-USERNAME=Anonymous
 git clone https://github.com/staab/git-chat.git
 cd git-chat
 npm start Anonymous
 ```
 
-You can set your username if you'd like, by changing that first parameter.
+You can set your username if you'd like, by changing that first parameter to `npm start`.
 
 # Disclaimer
 
