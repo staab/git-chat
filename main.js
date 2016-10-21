@@ -128,7 +128,8 @@ function pull() {
         process.stdout.cursorTo(0)
 
         log.forEach(function(line) {
-          var match = line.match("    (.+)")
+          // linux and osx respectively
+          var match = line.match("    (.+)") || line.match("Subject: (.+)")
 
           if (match) {
             console.log(match[1])
