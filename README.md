@@ -18,6 +18,16 @@ npm start Anonymous
 
 You can set your username if you'd like, by changing that first parameter to `npm start`.
 
+# Known Issues
+
+I'm actually pretty proud of how bad this software is.
+
+- Sometimes it just stops receiving messages. Not sure why
+- Doesn't really work cross-platform because it parses `git log` with a very naive regexp, and uses `cd`
+- Sometimes it fails on startup (or after) with `can't cd to /path/to/repo`
+- Authentication is done by embedding the username and password in the repo url
+- Sometimes it double-commits messages for whatever reason
+
 # Disclaimer
 
 This is a toy. It's not tested, it's not secure, it's not fast, it might even be dangerous. Don't use it seriously. But do try it out! Also it might only work on linux.
