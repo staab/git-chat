@@ -122,6 +122,10 @@ function pull() {
         process.stdout.cursorTo(0)
         var sections = log.split('\n')
 
+        if (sections.length > 0) {
+          exec("( speaker-test -t sine -f 1000 )& pid=$! ; sleep 0.1s ; kill -9 $pid")
+        }
+
         sections.forEach(function(line) {
           if (line.length > 0) {
             var msg = line.split(':').slice(1).join(":")
