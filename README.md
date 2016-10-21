@@ -26,7 +26,8 @@ I'm actually pretty proud of how bad this software is.
 - Doesn't really work cross-platform because it parses `git log` with a very naive regexp, and uses `cd`
 - Sometimes it fails on startup (or after) with `can't cd to /path/to/repo`
 - Authentication is done by embedding the username and password in the repo url
-- Sometimes it double-commits messages for whatever reason
+- Sometimes it double-commits messages because it retries on failed pushes, which re-commits
+- If you delete uuid.txt it breaks everything.
 
 # Disclaimer
 

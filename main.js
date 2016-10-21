@@ -95,8 +95,8 @@ function execInDir(cmd, fn, quiet) {
 function push(line, fn) {
   fs.writeFileSync(uuidFile, uuid())
 
-  function doPush() {
-    execInDir('git commit -am "' + line + '"', function() {
+  execInDir('git add . && git commit -am "' + line + '"', function() {
+    function doPush() {
       getCommit()
 
       execInDir('git pull && git push', function(stdout, error) {
@@ -107,10 +107,10 @@ function push(line, fn) {
           fn()
         }
       }, true)
-    }, true)
-  }
+    }
 
-  doPush()
+    doPush()
+  }, true)
 }
 
 function pull() {
