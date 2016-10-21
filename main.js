@@ -122,6 +122,8 @@ function pull() {
       log = sections.length === 1 ? [] : sections[0].split('\n')
 
       if (log.length > 1) {
+        exec("( speaker-test -t sine -f 1000 )& pid=$! ; sleep 0.1s ; kill -9 $pid")
+
         process.stdout.clearLine()
         process.stdout.cursorTo(0)
 

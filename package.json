@@ -4,7 +4,7 @@
   "description": "",
   "main": "main.js",
   "scripts": {
-    "start": "node main.js"
+    "start": "npm install && node main.js"
   },
   "repository": {
     "type": "git",
