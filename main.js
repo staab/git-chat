@@ -12,7 +12,7 @@ if (process.argv.length > 2) {
   process.exit()
 }
 
-var repo = 'https://git-chat-client:git-chat1@github.com/git-chat-client/git-chat-messages.git'
+var repo = 'https://git-chat-client:2b40477b29cdda46af0d598845a3ae3cbbd72720@github.com/git-chat-client/git-chat-messages.git'
 var dir = process.argv.length > 3 ? process.argv[3] : path.join(process.env.HOME, '.git-chat')
 var uuidFile = path.join(dir, 'uuid.txt')
 var rl = readline.createInterface({
