@@ -1,6 +1,6 @@
 # git-chat
 
-This is a chat client built entirely on git. 
+This is a chat client built entirely on git. Do be aware that this is totally a joke.
 
 I was inspired to do this by slack - the ultimate abuse of a chat program. With all its integrations, there are ways you can set it up so that all you see is a firehose of worthless data; issue tracker events, version control events - to the point that communication through your chat program becomes difficult.
 
