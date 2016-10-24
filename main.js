@@ -115,24 +115,21 @@ function push(line, fn) {
 
 function pull() {
   execInDir("git pull", function() {
-    execInDir('git log', function(log) {
-      var sections = log.split(commit)
-
-      // Race condition hack
-      log = sections.length === 1 ? [] : sections[0].split('\n')
-
-      if (log.length > 1) {
-        exec("( speaker-test -t sine -f 1000 )& pid=$! ; sleep 0.1s ; kill -9 $pid")
-
+    var cmd = 'git log --format=" %H :%s" ' + commit + '..HEAD'
+    execInDir(cmd, function(log) {
+      if (log.length > 0) {
         process.stdout.clearLine()
         process.stdout.cursorTo(0)
+        var sections = log.split('\n')
 
-        log.forEach(function(line) {
-          // linux and osx respectively
-          var match = line.match("    (.+)") || line.match("Subject: (.+)")
+        if (sections.length > 0) {
+          exec("( speaker-test -t sine -f 1000 )& pid=$! ; sleep 0.1s ; kill -9 $pid")
+        }
 
-          if (match) {
-            console.log(match[1])
+        sections.forEach(function(line) {
+          if (line.length > 0) {
+            var msg = line.split(':').slice(1).join(":")
+            console.log(msg)
           }
         })
 
@@ -144,7 +141,7 @@ function pull() {
 }
 
 function getCommit() {
-  execInDir('git log | head -n1', function(stdout) {
-    commit = stdout
+  execInDir('git rev-parse HEAD', function(stdout) {
+    commit = stdout.replace('\n', '');
   })
 }
