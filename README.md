@@ -10,7 +10,7 @@ This is a riff on that - what if instead of using your chat program to browse co
 
 Give it a try! It's pretty simple. Just type this into your terminal:
 
-**Note** the install steps below no longer work, as someone has deleted the git-chat-messages user (as was inevitable). To get this working, change the repository url in main.js to a repository you and your chat members have write access to. Don't use a git repository that you care about though, as this will add a new commit message for every chat. Also, you'll need to commit an empty `uuid.txt` file in that directory to get started.
+**Note** the install steps below no longer work, as someone has deleted the git-chat-client user (as was inevitable). To get this working, change the repository url in main.js to a repository you and your chat members have write access to. Don't use a git repository that you care about though, as this will add a new commit message for every chat. Also, you'll need to commit an empty `uuid.txt` file in that directory to get started.
 
 ```
 git clone https://github.com/staab/git-chat.git
